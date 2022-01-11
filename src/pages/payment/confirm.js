@@ -1,43 +1,61 @@
 import ProductComponent from '../../components/products/product'
-import {
-  usePlaidLink,
-  PlaidLinkOptions,
-  PlaidLinkOnSuccess,
-} from 'react-plaid-link'
-
-const linkHandler = Plaid.create({
-  token: (await $.post('/create_link_token')).link_token,
-  onSuccess: (public_token, metadata) => {
-    // Send the public_token to your app server.
-    $.post('/exchange_public_token', {
-      public_token: public_token,
-    })
-  },
-  onExit: (err, metadata) => {
-    // Optionally capture when your user exited the Link flow.
-    // Storing this information can be helpful for support.
-  },
-  onEvent: (eventName, metadata) => {
-    // Optionally capture Link flow events, streamed through
-    // this callback as your users connect an Item to Plaid.
-  },
-})
-
+import { usePlaidLink } from 'react-plaid-link'
+import React, { useEffect, useState } from 'react'
+const Link = (props) => {
+  const onSuccess = React.useCallback((public_token, metadata) => {
+    // send public_token to server
+    const response = fetch('http://localhost:3030/api/create_link_token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ public_token }),
+    }) // Handle response ...
+  }, [])
+  const config = {
+    token: props.linkToken,
+    receivedRedirectUri: window.location.href,
+    onSuccess,
+  }
+  const { open, ready } = usePlaidLink(config)
+  return (
+    <button
+      onClick={() => {
+        console.log('clicked')
+        open()
+      }}
+      disabled={!ready}
+    >
+      Link account
+    </button>
+  )
+}
 const ConfirmComponent = () => {
+  const [linkToken, setLinkToken] = useState(null)
+  const generateToken = async () => {
+    const response = await fetch('/api/create_link_token', {
+      method: 'POST',
+    })
+    const data = await response.json()
+    setLinkToken(data.link_token)
+  }
+  useEffect(() => {
+    generateToken()
+  }, [])
   return (
     <div>
       <ProductComponent></ProductComponent>
       <div className="container w-1/4">
         <h2 className="font-bold text-lg my-3">Order Summary</h2>
         <table className="table-auto my-3">
-          <tr className="">
-            <td className="w-2/4">Items</td>
-            <td className="w-2/4">$39.99</td>
-          </tr>
+          <tbody>
+            <tr className="">
+              <td className="w-2/4">Items</td>
+              <td className="w-2/4">$39.99</td>
+            </tr>
+          </tbody>
         </table>
-        <button onClick={() => linkHandler.open()} className="btn">
-          Confirm Purchase
-        </button>
+        <Link className="btn">Confirm Purchase</Link>
       </div>
     </div>
   )
