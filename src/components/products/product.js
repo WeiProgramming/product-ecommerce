@@ -2,7 +2,7 @@ import product1 from '../../assets/sample-moisturizer.jpg'
 
 const ProductComponent = () => {
   return (
-    <div className="container w-1/4 border-solid border-2">
+    <div className="container w-full border-solid border-2">
       <img src={product1} alt="sample product" />
       <div className="p-3">
         <h2 className="font-bold text-lg text-center">Product Test</h2>

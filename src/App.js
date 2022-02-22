@@ -5,6 +5,7 @@ import NavComponent from './components/nav/nav'
 import './App.css'
 // Router
 import { Routes, Route, Link } from 'react-router-dom'
+import SavedComponent from './pages/saved/saved'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <NavComponent />
       <Routes>
         <Route path="/" element={<MainComponent />} />
+        <Route path="/saved" element={<SavedComponent />} />
         <Route path="/transaction" element={<ConfirmComponent />} />
       </Routes>
     </div>
