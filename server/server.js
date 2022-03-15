@@ -2,6 +2,12 @@ const express = require('express')
 const app = express()
 const port = 3030
 
+const {
+  receivePublicToken,
+  getTransactions,
+  exchangeForAccessToken
+  } = require("./controllers/controller");
+
 app.use(express.json())
 
 const { Configuration, PlaidApi, PlaidEnvironments } = require('plaid')
@@ -22,29 +28,12 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.post('/api/create_link_token', async function (req, res) {
-  // Get the client_user_id by searching for the current user
-  const user = { id: '1213453' }
-  const clientUserId = user.id
-  const request = {
-    user: {
-      // This should correspond to a unique id for the current user.
-      client_user_id: clientUserId,
-    },
-    client_name: 'Plaid Test App',
-    products: [],
-    language: 'en',
-    webhook: 'https://google.com',
-    country_codes: ['US'],
-  }
-  try {
-    console.log('retreiving"')
-    const createTokenResponse = await client.linkTokenCreate(request)
-    res.json(createTokenResponse.data)
-  } catch (error) {
-    // handle error
-  }
-})
+// Get the public token and exchange it for an access token
+app.post("/auth/public_token", receivePublicToken);
+
+app.post("/auth/exchange_public_token", exchangeForAccessToken )
+// Get Transactions
+app.get("/transactions", getTransactions);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
