@@ -19,4 +19,7 @@ code {
   .btn {
     @apply text-white hover:text-blue-500 right-0 w-2/4 border-solid border-2 mt-3 p-3 bg-blue-500 hover:bg-white;
   }
+  .nav-item {
+    @apply flex content-center items-center h-full px-3 hover:bg-indigo-200 hover:text-white hover:cursor-pointer;
+  }
 }
