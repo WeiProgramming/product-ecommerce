@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import ProductComponent from '../components/products/product'
 
@@ -63,6 +64,7 @@ const MainComponent = () => {
             </div>
           </div>
         </div>
+        <Link to="/products">
         <div
           onClick={() => {
             updateSlideState()
@@ -71,24 +73,32 @@ const MainComponent = () => {
           className="relative flex items-center justify-center cursor-pointer border-2 col-span-1 py-4 px-28 bg-moisturizer-bg bg-cover bg-center"
         >
           <div className="absolute z-5 top-0 right-0 w-full h-full bg-gray-700 opacity-30"></div>
+          
           <p className="text-white z-10 font-semibold uppercase">
             Moisturizers
           </p>
         </div>
+        </Link>
+        <Link to="/products">
         <div className="relative flex items-center justify-center cursor-pointer border-2 col-span-1 py-4 px-28 bg-shampoo-bg bg-cover bg-center">
           <div className="top-0 right-0 z-5 absolute w-full h-full bg-gray-700 opacity-30"></div>
           <p className="text-white z-10 font-semibold uppercase">Shampoo TBA</p>
         </div>
+        </Link>
+        <Link to="/products">
         <div className="relative flex items-center justify-center cursor-pointer border-2 col-span-1 py-4 px-28 bg-shampoo-bg bg-cover bg-center">
           <div className="absolute z-5 top-0 right-0 w-full h-full bg-gray-700 opacity-30"></div>
           <p className="text-white z-10 font-semibold uppercase">Serums</p>
         </div>
+        </Link>
+        <Link to="/products">
         <div className="relative flex items-center justify-center cursor-pointer border-2 col-span-1 py-4 px-28 bg-shampoo-bg bg-cover bg-center">
           <div className="absolute z-5 top-0 right-0 w-full h-full bg-gray-700 opacity-30"></div>
           <p className="text-white z-10 font-semibold uppercase">
             Cleansers TBA
           </p>
         </div>
+        </Link>
       </div>
       <div className="flex flex-col content-start items-center m-4">
         <h2 className="block uppercase text-xl font-medium">Featured</h2>
